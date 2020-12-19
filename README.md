@@ -33,15 +33,39 @@ class Main extends \pocketmine\plugin\PluginBase {
 //Use the class 
 use SunProxy\SunProxyAPI\SunProxyAPI;
 
-class Main extends \pocketmine\plugin\PluginBase {
+class Main extends \pocketmine\plugin\PluginBase implements \pocketmine\event\Listener {
     public function onEnable() {
         //Is always needed to start up Packet usage
         SunProxyAPI::Register();
+        $this->getServer()->getPluginManager()->registerEvents($this, $this);
     }
 
     public function onChat(\pocketmine\event\player\PlayerChatEvent $event) {
-        SunProxyAPI::SendProxyWideChat($event->getPlayer(), $event->getMessage());
+        SunProxyAPI::SendProxyWideChat($event->getPlayer(), $event->getFormat() . $event->getMessage());
+        $event->setCancelled();
     }
+}
+```
+
+### Anti Direct connect
+```php
+//Use the class 
+use SunProxy\SunProxyAPI\SunProxyAPI;
+
+class Main extends \pocketmine\plugin\PluginBase {
+    
+    public function onEnable(){
+        $this->getServer()->getPluginManager()->registerEvents($this, $this);
+    }
+
+    public function onPreLogin(\pocketmine\event\player\PlayerPreLoginEvent $event) {
+        //Check if player isn't sending packets from the local addr
+        if ($event->getPlayer()->getAddress() !== "0.0.0.0:19132") {
+            $event->setKickMessage("You must join from the lobby!");
+            $event->setCancelled();
+        }   
+    }  
+
 }
 ```
 
