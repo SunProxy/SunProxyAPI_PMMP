@@ -2,7 +2,48 @@
 the pmmp virion for interacting with the sun proxy api
 
 
+# Usage
+This virion is meant to be used with a server using the [SunProxy](https://github.com/SunProxy/sun) <br>
+### Fast Transfer
+```php
+//Use the class 
+use SunProxy\SunProxyAPI\SunProxyAPI;
 
+class Main extends \pocketmine\plugin\PluginBase {
+    public function onEnable() {
+        //Is always needed to start up Packet usage
+        SunProxyAPI::Register();
+    }
+
+    public function onCommand(\pocketmine\command\CommandSender $sender,\pocketmine\command\Command $command,string $label, array $args) : bool {
+        switch ($label) {
+            case "transfer":
+                if ($sender instanceof \pocketmine\Player) {
+                    //transfer players based on arg input
+                    SunProxyAPI::FastTransferPlayer($sender, $args[0], (int) $args[1]);
+                }
+        }
+        return true;
+    }
+
+}
+```
+### Proxy Wide Chat
+```php
+//Use the class 
+use SunProxy\SunProxyAPI\SunProxyAPI;
+
+class Main extends \pocketmine\plugin\PluginBase {
+    public function onEnable() {
+        //Is always needed to start up Packet usage
+        SunProxyAPI::Register();
+    }
+
+    public function onChat(\pocketmine\event\player\PlayerChatEvent $event) {
+        SunProxyAPI::SendProxyWideChat($event->getPlayer(), $event->getMessage());
+    }
+}
+```
 
 # License
 ```
