@@ -49,6 +49,25 @@ class Main extends \pocketmine\plugin\PluginBase implements \pocketmine\event\Li
 }
 ```
 
+### Proxy Chat To Certain Servers
+```php
+//Use the class 
+use SunProxy\SunProxyAPI\SunProxyAPI;
+
+class Main extends \pocketmine\plugin\PluginBase implements \pocketmine\event\Listener {
+    public function onEnable() {
+        //Is always needed to start up Packet usage
+        SunProxyAPI::Register();
+        $this->getServer()->getPluginManager()->registerEvents($this, $this);
+    }
+
+    public function onChat(\pocketmine\event\player\PlayerChatEvent $event) {
+        SunProxyAPI::SendChatToServers($event->getPlayer(), $event->getFormat() . $event->getMessage(), ["ip:port","velvetpractice.live:19132"]);
+        $event->setCancelled();
+    }
+}
+```
+
 ### Anti Direct connect
 ```php
 //Use the class 

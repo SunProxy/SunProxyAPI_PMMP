@@ -95,4 +95,20 @@ class SunProxyAPI
         $pk->message = $msg;
         $player->sendDataPacket($pk);
     }
+
+    /**
+     * @author Jviguy
+     *
+     * Sends a message to the said servers if there are players on it
+     *
+     * @param Player $player - the player to send the packet too
+     * @param string $msg - the message to be sent
+     * @param array $servers - an array of ips formatted like "IP:PORT"
+     */
+    public static function SendChatToServers(Player $player, string $msg, array $servers) {
+        $pk = new SunTextPacket();
+        $pk->message = $msg;
+        $pk->servers = $servers;
+        $player->sendDataPacket($pk);
+    }
 }

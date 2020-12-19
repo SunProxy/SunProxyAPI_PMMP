@@ -50,14 +50,29 @@ class SunTextPacket extends DataPacket
     /** @var string $message - the given message to be sent proxy wide */
     public $message;
 
+    /** @var string[] $servers - An array of ips that messages will be sent too */
+    public $servers = [];
+
     protected function decodePayload(){
         //read Message
         $this->message = $this->getString();
+        //Read the count
+        $count = $this->getUnsignedVarInt();
+        //Read the servers
+        for ($i = 0; $i < $count; $i++) {
+            $this->message[] = $this->getString();
+        }
     }
 
     protected function encodePayload() {
         //Write Message
         $this->putString($this->message);
+        //Put the count
+        $this->putUnsignedVarInt(count($this->servers));
+        //Put all the servers
+        foreach ($this->servers as $server) {
+            $this->putString($server);
+        }
     }
 
 
