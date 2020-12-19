@@ -1,6 +1,8 @@
 # <p align="center"><img src="https://github.com/SunProxy/sun/blob/master/SunProxy.png"/></p>
 the pmmp virion for interacting with the sun proxy api
 
+# Downloading
+This project is connected to Poggit-CI so downloads are located [Here](https://poggit.pmmp.io/ci/SunProxy/SunProxyAPI_PMMP/~).
 
 # Usage
 This virion is meant to be used with a server using the [SunProxy](https://github.com/SunProxy/sun) <br>
