@@ -40,8 +40,10 @@ declare(strict_types=1);
 
 namespace SunProxy\SunProxyAPI;
 
+use pocketmine\network\mcpe\protocol\DataPacket;
 use pocketmine\network\mcpe\protocol\PacketPool;
 use pocketmine\Player;
+use ReflectionException;
 
 class SunProxyAPI
 {
@@ -55,13 +57,21 @@ class SunProxyAPI
     public const SUN_TEXT_PACKET = 0x301;
 
     /**
+     * @throws ReflectionException
+     * @api - MUST BE CALLED THIS NEEDS TO BE CALLED BEFORE USING ANY API METHOD OR PACKET
      * @author Jviguy
      *
      * Registers the Custom Proxy packets for use!
      *
-     * @api - MUST BE CALLED THIS NEEDS TO BE CALLED BEFORE USING ANY API METHOD OR PACKET
      */
     public static function Register() {
+        $reflectc = new \ReflectionClass("PacketPool");
+        $pool = $reflectc->getProperty("pool");
+        $pool->setAccessible(true);
+        /** @var \SplFixedArray<DataPacket> $oldpool */
+        $oldpool = $pool->getValue();
+        $oldpool->setSize(400);
+        $pool->setValue($oldpool);
         PacketPool::registerPacket(new SunTransferPacket());
         PacketPool::registerPacket(new SunTextPacket());
     }
