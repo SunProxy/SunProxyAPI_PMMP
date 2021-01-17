@@ -49,10 +49,41 @@ class SunProxyAPI
      * The ID of the SunTransferPacket
      */
     public const SUN_TRANSFER_PACKET = 0xFA;
+
     /**
      * The ID of the SunTextPacket
      */
     public const SUN_TEXT_PACKET = 0xFB;
+
+    /**
+     * The ID of the AuthPacket
+     */
+    public const PLANET_AUTH_PACKET = 0x00;
+
+    /**
+     * The ID of the DisconnectPacket
+     */
+    public const PLANET_DISCONNECT_PACKET = 0x01;
+
+    /**
+     * The ID of the PlanetTransferPacket
+     */
+    public const PLANET_TRANSFER_PACKET = 0x02;
+
+    /**
+     * The ID of the TransferResponsePacket
+     */
+    public const PLANET_TRANSFER_RESPONSE_PACKET = 0x03;
+
+    /**
+     * The ID of the PlanetTextPacket
+     */
+    public const PLANET_TEXT_PACKET = 0x04;
+
+    /**
+     * The ID of the TextResponsePacket
+     */
+    public const PLANET_TEXT_RESPONSE_PACKET = 0x05;
 
     /**
      * @api - MUST BE CALLED THIS NEEDS TO BE CALLED BEFORE USING ANY API METHOD OR PACKET
@@ -64,6 +95,12 @@ class SunProxyAPI
     public static function Register() {
         PacketPool::registerPacket(new SunTransferPacket());
         PacketPool::registerPacket(new SunTextPacket());
+        PacketPool::registerPacket(new AuthPacket());
+        PacketPool::registerPacket(new DisconnectPacket());
+        PacketPool::registerPacket(new PlanetTransferPacket());
+        PacketPool::registerPacket(new TransferResponsePacket());
+        PacketPool::registerPacket(new PlanetTextPacket());
+        PacketPool::registerPacket(new TextResponsepacket());
     }
 
     /**
