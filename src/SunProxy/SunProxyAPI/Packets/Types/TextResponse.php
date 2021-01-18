@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SunProxy\SunProxyAPI;
+namespace SunProxy\SunProxyAPI\Packet\Types;
 
 interface TextResponse
 {
