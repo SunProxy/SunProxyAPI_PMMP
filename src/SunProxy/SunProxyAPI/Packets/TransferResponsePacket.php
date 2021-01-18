@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SunProxy\SunProxyAPI\Packet;
+namespace SunProxy\SunProxyAPI\Packets;
 
 use pocketmine\network\mcpe\NetworkSession;
 use pocketmine\network\mcpe\protocol\DataPacket;
