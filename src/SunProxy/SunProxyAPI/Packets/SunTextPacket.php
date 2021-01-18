@@ -1,5 +1,4 @@
 <?php
-
 /*
       ___           ___           ___
      /  /\         /__/\         /__/\
@@ -43,38 +42,45 @@ namespace SunProxy\SunProxyAPI;
 use pocketmine\network\mcpe\NetworkSession;
 use pocketmine\network\mcpe\protocol\DataPacket;
 use pocketmine\network\mcpe\protocol\ProtocolInfo;
-use function pack;
-use function unpack;
 
-class SunTransferPacket extends DataPacket /* implements ClientBoundPacket */
+class SunTextPacket extends DataPacket
 {
-    public const NETWORK_ID = ProtocolInfo::TRANSFER_PACKET;
+    public const NETWORK_ID = SunProxyAPI::SUN_TEXT_PACKET;
 
-    /** @var string $address - the said ip the player should be transferred to */
-    public $address;
+    /** @var string $message - the given message to be sent proxy wide */
+    public string $message;
 
-    /** @var int $port - a uint16 representing the port the player should go to on the address */
-    public $port = 19132;
+    /** @var string[] $servers - An array of ips that messages will be sent too */
+    public array $servers = [];
 
     protected function decodePayload(){
-        //read Address
-        $this->address = $this->getString();
-        //read uint16
-        $this->port = ((unpack("v", $this->get(2))[1]));
+        //read Message
+        $this->message = $this->getString();
+        //Read the count
+        $count = $this->getUnsignedVarInt();
+        //Read the servers
+        for ($i = 0; $i < $count; $i++) {
+            $this->message[] = $this->getString();
+        }
     }
 
     protected function encodePayload() {
-        //Address
-        $this->putString($this->address);
-        //write uint16 to buffer
-        ($this->buffer .= (pack("v", $this->port)));
+        //Write Message
+        $this->putString($this->message);
+        //Put the count
+        $this->putUnsignedVarInt(count($this->servers));
+        //Put all the servers
+        foreach ($this->servers as $server) {
+            $this->putString($server);
+        }
     }
+
 
     /**
      * @inheritDoc
      */
-    public function handle(NetworkSession $session) : bool {
-        //let client handle it as pmmp does this too
+    public function handle(NetworkSession $session): bool
+    {
         return false;
     }
 }
