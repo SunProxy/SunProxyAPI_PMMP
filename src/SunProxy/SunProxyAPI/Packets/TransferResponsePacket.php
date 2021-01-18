@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace SunProxy\SunProxyAPI;
+namespace SunProxy\SunProxyAPI\Packet;
 
 use pocketmine\network\mcpe\NetworkSession;
 use pocketmine\network\mcpe\protocol\DataPacket;
+use SunProxy\SunProxyAPI\SunProxyAPI;
 
 class TransferResponsePacket extends DataPacket
 {

@@ -42,6 +42,14 @@ namespace SunProxy\SunProxyAPI;
 
 use pocketmine\network\mcpe\protocol\PacketPool;
 use pocketmine\Player;
+use SunProxy\SunProxyAPI\Packet\AuthPacket;
+use SunProxy\SunProxyAPI\Packet\DisconnectPacket;
+use SunProxy\SunProxyAPI\Packet\PlanetTextPacket;
+use SunProxy\SunProxyAPI\Packet\PlanetTransferPacket;
+use SunProxy\SunProxyAPI\Packet\TextResponsePacket;
+use SunProxy\SunProxyAPI\Packet\TransferResponsePacket;
+use SunProxy\SunProxyAPI\Packet\SunTransferPacket;
+use SunProxy\SunProxyAPI\Packet\SunTextPacket;
 
 class SunProxyAPI
 {

@@ -38,11 +38,12 @@ SOFTWARE.
 
 declare(strict_types=1);
 
-namespace SunProxy\SunProxyAPI;
+namespace SunProxy\SunProxyAPI\Packet;
 
 use pocketmine\network\mcpe\NetworkSession;
 use pocketmine\network\mcpe\protocol\DataPacket;
 use pocketmine\network\mcpe\protocol\ProtocolInfo;
+use SunProxy\SunProxyAPI\SunProxyAPI;
 use function pack;
 use function unpack;
 
