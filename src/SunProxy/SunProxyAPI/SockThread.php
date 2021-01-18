@@ -7,7 +7,7 @@ namespace SunProxy\SunProxyAPI;
 use pocketmine\network\mcpe\protocol\DataPacket;
 use pocketmine\Thread;
 
-use Socket;
+use pocketmine\utils\Binary;
 use Threaded;
 use function socket_create;
 
@@ -64,7 +64,14 @@ class SockThread extends Thread
         try {
             $fd = $this->connect();
             while ($this->running) {
-
+                while (($send = $this->out->shift()) !== null) {
+                    $length = strlen($send);
+                    $wrote = @socket_write($fd, Binary::writeLInt($length) . $send, 4 + $length);
+                    if ($wrote !== 4 + $length) {
+                        socket_close($fd);
+                        $fd = $this->connect();
+                    }
+                }
             }
         } catch (TCPSocketException $ex) {
             return;
@@ -72,7 +79,7 @@ class SockThread extends Thread
     }
 
     /**
-     * @return false|resource|Socket
+     * @return false|resource|\Socket
      * @throws TCPSocketException
      */
     public function connect() {
